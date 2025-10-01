@@ -30,6 +30,11 @@ extends Node
 var tween: Tween
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint() and target_node == null:
+		target_node = get_parent()
+
+
 func play() -> void:
 	if target_node:
 		if tween: tween.kill()
