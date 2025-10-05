@@ -9,8 +9,6 @@ extends Button
 
 @export var rebind_screen: Control
 
-var is_valid_action: bool = false
-
 
 func _init() -> void:
 	toggle_mode = true
