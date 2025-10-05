@@ -1,8 +1,15 @@
+@tool
 class_name RebindButton
 extends Button
 
-@export var action_name: StringName
+@export var action_name: StringName:
+	set(value):
+		action_name = value
+		if Engine.is_editor_hint(): update_configuration_warnings()
+
 @export var rebind_screen: Control
+
+var is_valid_action: bool = false
 
 
 func _init() -> void:
@@ -11,9 +18,10 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	self.toggled.connect(_toggled)
-	set_process_unhandled_input(false)
-	update_text()
+	if not Engine.is_editor_hint():
+		self.toggled.connect(_toggled)
+		set_process_unhandled_input(false)
+		update_text()
 
 
 func update_text() -> void:
@@ -31,6 +39,13 @@ func _toggled(_pressed):
 
 
 func _unhandled_input(event):
-	if event.is_pressed():
+	if event.is_pressed() and not Engine.is_editor_hint():
 		CustomInputManager.remap_action(action_name, event)
 		button_pressed = false
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+	if not ProjectSettings.has_setting("input/" + action_name):
+		warnings.append("Action '%s' does not exist in Input Map." % action_name)
+	return warnings
