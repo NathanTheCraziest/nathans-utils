@@ -34,11 +34,6 @@ func _on_action_input_changed(_action_name: StringName) -> void:
 		update_text()
 
 
-func update_text() -> void:
-	print(InputMap.action_get_events(action_name).front().physical_keycode)
-	text = OS.get_keycode_string(InputMap.action_get_events(action_name).front().physical_keycode)
-
-
 func _toggled(_pressed):
 	set_process_unhandled_input(_pressed)
 	if _pressed:
@@ -60,3 +55,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not ProjectSettings.has_setting("input/" + action_name):
 		warnings.append("Action '%s' does not exist in Input Map." % action_name)
 	return warnings
+
+
+func update_text() -> void:
+	print(InputMap.action_get_events(action_name).front().physical_keycode)
+	text = OS.get_keycode_string(InputMap.action_get_events(action_name).front().physical_keycode)
+
+
+func reset_action() -> void:
+	CustomInputManager.reset_action(action_name)
