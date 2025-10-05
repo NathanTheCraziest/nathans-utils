@@ -56,7 +56,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func update_text() -> void:
-	print(InputMap.action_get_events(action_name).front().physical_keycode)
 	text = OS.get_keycode_string(InputMap.action_get_events(action_name).front().physical_keycode)
 
 
