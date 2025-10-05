@@ -21,11 +21,22 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		self.toggled.connect(_toggled)
 		set_process_unhandled_input(false)
+		
+		CustomInputManager.on_action_input_changed.connect(_on_action_input_changed)
+		
+		await get_tree().process_frame
+		
+		update_text()
+
+
+func _on_action_input_changed(_action_name: StringName) -> void:
+	if action_name == _action_name:
 		update_text()
 
 
 func update_text() -> void:
-	text = InputMap.action_get_events(action_name).front().as_text()
+	print(InputMap.action_get_events(action_name).front().physical_keycode)
+	text = OS.get_keycode_string(InputMap.action_get_events(action_name).front().physical_keycode)
 
 
 func _toggled(_pressed):
