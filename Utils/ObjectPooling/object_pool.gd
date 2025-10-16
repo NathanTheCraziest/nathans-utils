@@ -11,7 +11,7 @@ var objects_pooled: Array[Node] = []
 var all_objects: Array[Node] = []
 
 
-func _init(scene: PackedScene, max_objects: int = 0) -> void:
+func _init(scene: PackedScene = null, max_objects: int = 0) -> void:
 	self.maximum_objects = max_objects
 	self.object_scene = scene
 
